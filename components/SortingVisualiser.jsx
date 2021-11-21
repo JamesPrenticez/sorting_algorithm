@@ -3,29 +3,37 @@ import { useState, useEffect } from 'react'
 function SortingVisualiser() {
   const [array, setArray] = useState([])
 
-  useEffect = () => {
-    resetArray()
-  }, []
-
   const resetArray = () => {
     const array = []
-    for (let i = 0; i < 100; i++){
-      array.push(randomIntFromIntercal(5, 1000))
+    const w = Math.floor((screen.width * 0.8333) / 7)
+    console.log(w)
+    for (let i = 0; i < w; i++){
+      array.push(randomIntFromIntercal(10, 800))
     }
     setArray(array)
   }
 
+  useEffect(() => {
+    resetArray()
+  }, [])
+
+  // {console.log(screen.width)}
   return (
-    <div className="flex flex-wrap w-full bg-gray-100">
-      {array.map((value, index) => (
-      <div 
-        key={index}
-        className="inline-block text-sm text-red-500 mx-1"
-      >
-        {value}
-      </div>  
-       ))}
-    </div>
+    <>
+    <div className="w-screen h-screen flex justify-center items-center bg-gray-50">
+      
+      <div className="w-5/6 h-[800px]  flex items-end bg-gray-200">
+        {array.map((value, index) => (
+          <div 
+          key={index}
+          className="inline-block text-xs text-white bg-blue-500 w-[5px] mx-[1px]"
+          style={{height: value}}
+          >
+        </div>  
+        ))}
+        </div>
+      </div>
+    </>
   )
 }
 
