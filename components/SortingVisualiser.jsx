@@ -1,16 +1,43 @@
 import { useState, useEffect } from 'react'
+import { getMergeSortAnimations } from "../algorithms/mergeSort"
 
 function SortingVisualiser() {
   const [array, setArray] = useState([])
-
+  const ANIMATION_SPEED_MS = 1
+  const NUMBER_OF_ARRAY_BARS = 228
+  const PRIMARY_COLOR = "#3B82F6"
+  const SECONDARY_COLOR = "red"
+  
   const resetArray = () => {
     const array = []
-    const w = Math.floor((screen.width * 0.8333) / 7)
-    console.log(w)
-    for (let i = 0; i < w; i++){
+    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++){
       array.push(randomIntFromIntercal(10, 800))
     }
     setArray(array)
+  }
+
+  const mergeSort = () => {
+      const animations = getMergeSortAnimations(array);
+      for(let i = 0; i < animations.length; i++){
+        const arrayBars = document.getElementsByClassName("arrayBar")
+        const isColorChange = i % 3 !== 2
+        if(isColorChange){
+          const [barOneIndex, barTwoIndex] = animations[i]
+          const barOneStyle = arrayBars[barOneIndex].style
+          const barTwoStyle = arrayBars[barTwoIndex].style
+          const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color
+          barTwoStyle.backgroundColor = color
+        }, i * ANIMATION_SPEED_MS)
+      } else {
+        setTimeout(() => {
+          const [barOneIdx, newHeight] = animations[i]
+          const barOneStyle = arrayBars[barOneIdx].style
+          barOneStyle.height = `${newHeight}px`
+        }, i * ANIMATION_SPEED_MS)
+      }
+    }
   }
 
   useEffect(() => {
@@ -21,9 +48,9 @@ function SortingVisualiser() {
     <>
     {/*Tool Bar*/}
     <div className="w-full h-16 flex space-x-4 pl-4 bg-blue-700 text-white">
-      <button>Merge Sort</button>
+      <button onClick={() => mergeSort()}>Merge Sort</button>
       <button>Bubble Sort</button>
-      <button>Merge Sort</button>
+      <button>Heap Sort</button>
       <button>Quick Sort</button>
       <button 
         onClick={() => resetArray()}
@@ -38,9 +65,12 @@ function SortingVisualiser() {
       <div className="w-5/6 h-[800px]  flex items-end bg-gray-200">
         {array.map((value, index) => (
           <div 
-          key={index}
-          className="inline-block text-xs text-white bg-blue-500 w-[5px] mx-[1px]"
-          style={{height: value}}
+            key={index}
+            className="arrayBar inline-block text-xs text-white w-[5px] mx-[1px]"
+            style={{
+              backgroundColor: PRIMARY_COLOR,
+              height: `${value}px`,
+            }}
           >
         </div>  
         ))}
