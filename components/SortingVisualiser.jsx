@@ -17,11 +17,24 @@ function SortingVisualiser() {
     resetArray()
   }, [])
 
-  // {console.log(screen.width)}
   return (
     <>
-    <div className="w-screen h-screen flex justify-center items-center bg-gray-50">
-      
+    {/*Tool Bar*/}
+    <div className="w-full h-16 flex space-x-4 pl-4 bg-blue-700 text-white">
+      <button>Merge Sort</button>
+      <button>Bubble Sort</button>
+      <button>Merge Sort</button>
+      <button>Quick Sort</button>
+      <button 
+        onClick={() => resetArray()}
+        className=" !mr-4 px-4 !m-auto h-10 border border-white hover:bg-blue-500  rounded-lg"
+      >
+        Generate New Array
+      </button>
+    </div>
+
+    {/*Display Visualiser*/}
+    <div className="w-screen h-screenNav flex justify-center items-center bg-gray-50">
       <div className="w-5/6 h-[800px]  flex items-end bg-gray-200">
         {array.map((value, index) => (
           <div 

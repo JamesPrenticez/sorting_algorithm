@@ -7,6 +7,9 @@ module.exports = {
       fontFamily: {
         merriweather: ['Merriweather'],
       },
+      height:{
+        screenNav: "calc(100vh - 4rem)",
+      },
     },
   },
   variants: {
